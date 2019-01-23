@@ -1,0 +1,14 @@
+/*
+ *  Scene Styles
+ *    Provides the basic styles for scene wrappers, setup for a typical stream
+ *    setup.
+ *
+ *  Version:
+ *    1.0.0 - 2019/01/23
+ */
+.o-scene {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
