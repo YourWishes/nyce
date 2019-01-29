@@ -33,13 +33,13 @@ import { ReceiveStateHandler } from './../api/state/ReceiveStateHandler';
 export abstract class NyceApp extends App {
   socket:NyceSocketConnection;
 
-  constructor(appHandle:string, reducer:AppReducer={}) {
+  constructor(reducer:AppReducer={}) {
     //Setup Nyce Reducers
     reducer = {
       //...nyce,
       ...reducer
     };
-    super(appHandle, reducer);
+    super('nyce', reducer);//For 'nyce', refer to NyceCompiler.ts in private/compiler..
 
     //Setup Socket Connection
     this.socket = new NyceSocketConnection(this);
