@@ -50,4 +50,6 @@ export class NyceApp extends App implements IReactApp, ISocketApp {
   async acceptSocket(module:SocketModule, socket:Socket):Promise<SocketConnection> {
     return new NyceConnection(module, socket);
   }
+
+  getReducers():object { return {} }
 }
