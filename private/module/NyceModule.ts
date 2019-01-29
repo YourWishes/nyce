@@ -21,7 +21,27 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { NyceApp } from './app/';
+import { NyceApp } from './../app/NyceApp';
+import { Module } from '@yourwishes/app-base';
+import { createStore, Store, combineReducers } from 'redux';
 
-let app = new NyceApp();
-app.init().catch(e => app.logger.severe(e));
+export class NyceModule extends Module {
+  store:Store;
+  app:NyceApp;
+
+  constructor(app:NyceApp) {
+    super(app);
+    if(!app.server) throw new Error("Ensure Server has been setup before initializing Nyce");
+    if(!app.socket) throw new Error("Ensure Socket Server has been setup before initializing Nyce");
+
+    //Create Nyce Redux
+    this.store = createStore(combineReducers({
+      ...(app.getReducers() || {})
+    }));
+
+  }
+
+  async init():Promise<void> {
+
+  }
+}

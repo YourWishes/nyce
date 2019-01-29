@@ -21,7 +21,14 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { NyceApp } from './app/';
+import { SocketConnection } from '@yourwishes/app-socket/public';
+import { NyceApp } from './../app/NyceApp';
 
-let app = new NyceApp();
-app.init().catch(e => app.logger.severe(e));
+export class NyceSocketConnection extends SocketConnection {
+  app:NyceApp;
+
+  constructor(app:NyceApp, path?:string) {
+    super(path);
+    this.app = app;
+  }
+}

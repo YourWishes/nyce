@@ -21,7 +21,20 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { NyceApp } from './app/';
+import { Action } from 'redux';
+import { SET_SCENE, SET_STORE } from './../actions/';
 
-let app = new NyceApp();
-app.init().catch(e => app.logger.severe(e));
+const DefaultState = { scene: null };
+
+export const sceneReducer = (state=DefaultState, action:Action) => {
+  switch(action.type) {
+    case SET_SCENE:
+      return { ...state, scene: action['scene'] };
+
+    case SET_STORE:
+      return { ...state, scene: action['store']['scene'] };
+
+    default:
+      return { ...state };
+  }
+};

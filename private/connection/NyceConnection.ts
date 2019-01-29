@@ -21,7 +21,32 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { NyceApp } from './app/';
+import { RESPONSE_OK } from '@yourwishes/app-api';
+import { SocketConnection } from '@yourwishes/app-socket';
+import { NyceApp } from './../app/';
+import { increment } from './../actions/';
 
-let app = new NyceApp();
-app.init().catch(e => app.logger.severe(e));
+export class NyceConnection extends SocketConnection {
+  interval:NodeJS.Timeout;
+
+  sendState() {
+    //Sends the entire state to the client
+    this.send({
+      path: '/state/receive',
+      code: RESPONSE_OK,
+      data: (this.module.app as NyceApp).nyce.store.getState()
+    });
+  }
+
+  async onConnect():Promise<void> {
+    this.sendState();
+    this.interval = setInterval(() => {
+      (this.module.app as NyceApp).nyce.store.dispatch(increment(1));
+      this.sendState();
+    }, 1000);
+  }
+
+  async onDisconnect(reason:string): Promise<void> {
+    clearInterval(this.interval);
+  }
+}

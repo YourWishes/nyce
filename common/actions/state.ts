@@ -21,7 +21,8 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { NyceApp } from './app/';
+export const SET_STATE = 'SET_STATE';
 
-let app = new NyceApp();
-app.init().catch(e => app.logger.severe(e));
+export const setState = (state:object) => {
+  return { type: SET_STATE, state };
+};

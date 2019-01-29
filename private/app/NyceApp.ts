@@ -21,7 +21,33 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { NyceApp } from './app/';
+import { Socket } from 'socket.io';
+import { App } from '@yourwishes/app-base';
+import { IReactApp, ReactModule } from '@yourwishes/app-react';
+import { ISocketApp, SocketModule, SocketConnection } from '@yourwishes/app-socket';
+import { NyceConnection } from './../connection/';
+import { NyceModule } from './../module/';
 
-let app = new NyceApp();
-app.init().catch(e => app.logger.severe(e));
+
+export class NyceApp extends App implements IReactApp, ISocketApp {
+  socket:SocketModule;
+  server:ReactModule;
+  nyce:NyceModule;
+
+  constructor() {
+    super();
+
+    this.server = new ReactModule(this);
+    this.addModule(this.server);
+
+    this.socket = new SocketModule(this);
+    this.addModule(this.socket);
+
+    this.nyce = new NyceModule(this);
+    this.addModule(this.nyce);
+  }
+
+  async acceptSocket(module:SocketModule, socket:Socket):Promise<SocketConnection> {
+    return new NyceConnection(module, socket);
+  }
+}

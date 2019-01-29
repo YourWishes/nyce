@@ -2,13 +2,16 @@
   "compilerOptions": {
     "target": "es2018",
     "module": "commonjs",
-    "outDir": "./../dist/",
     "sourceMap": true,
     "declaration": true,
-    "typeRoots": [ "./node_modules/@types" ]
+    "outDir": "./dist/",
+    "typeRoots": [ "./node_modules/@types" ],
+    "jsx": "React"
   },
   "include": [
-    "./**/*.ts"
+    "./private/**/*.ts",
+    "./common/*.ts",
+    "./public/index.tsx"
   ],
   "exclude": [
     "node_modules",

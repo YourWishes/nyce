@@ -21,7 +21,16 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { NyceApp } from './app/';
+import { SocketRequest } from '@yourwishes/app-socket/public';
+import { NyceSocketHandler, NyceSocketConnection } from './../../socket';
+import { setState } from './../../actions/';
 
-let app = new NyceApp();
-app.init().catch(e => app.logger.severe(e));
+export class ReceiveStateHandler extends NyceSocketHandler {
+  constructor(connection:NyceSocketConnection) {
+    super(connection, '/state/receive');
+  }
+
+  async onRequest(request:SocketRequest):Promise<void> {
+    this.connection.app.store.dispatch(setState(request.data));
+  }
+}
