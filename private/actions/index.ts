@@ -23,5 +23,3 @@
 
 export * from './StoreActions';
 export * from './SceneActions';
-
-export * from './TestActions';

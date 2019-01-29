@@ -24,7 +24,6 @@
 import { RESPONSE_OK } from '@yourwishes/app-api';
 import { SocketConnection } from '@yourwishes/app-socket';
 import { NyceApp } from './../app/';
-import { increment } from './../actions/';
 
 export class NyceConnection extends SocketConnection {
   interval:NodeJS.Timeout;
@@ -40,10 +39,6 @@ export class NyceConnection extends SocketConnection {
 
   async onConnect():Promise<void> {
     this.sendState();
-    this.interval = setInterval(() => {
-      (this.module.app as NyceApp).nyce.store.dispatch(increment(1));
-      this.sendState();
-    }, 1000);
   }
 
   async onDisconnect(reason:string): Promise<void> {
