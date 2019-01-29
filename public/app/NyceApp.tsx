@@ -24,7 +24,7 @@
 import './../styles/NyceStyles.scss';
 
 import * as React from 'react';
-import { App, Router } from '@yourwishes/app-simple-react/public';
+import { App, Router, AppReducer } from '@yourwishes/app-simple-react/public';
 
 import { SceneProps } from './../scene/Scene';
 import { NyceSocketConnection } from './../socket/NyceSocketConnection';
@@ -33,7 +33,7 @@ import { ReceiveStateHandler } from './../api/state/ReceiveStateHandler';
 export abstract class NyceApp extends App {
   socket:NyceSocketConnection;
 
-  constructor(appHandle:string, reducer:object={}) {
+  constructor(appHandle:string, reducer:AppReducer={}) {
     //Setup Nyce Reducers
     reducer = {
       //...nyce,
