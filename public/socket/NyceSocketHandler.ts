@@ -29,5 +29,6 @@ export abstract class NyceSocketHandler extends SocketHandler {
 
   constructor(connection:NyceSocketConnection, path:string|string[]) {
     super(connection, path);
+    this.connection = connection;
   }
 }
