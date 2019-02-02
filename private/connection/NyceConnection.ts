@@ -26,8 +26,6 @@ import { SocketConnection } from '@yourwishes/app-socket';
 import { NyceApp } from './../app/';
 
 export class NyceConnection extends SocketConnection {
-  interval:NodeJS.Timeout;
-
   sendState() {
     //Sends the entire state to the client
     this.send({
@@ -42,6 +40,5 @@ export class NyceConnection extends SocketConnection {
   }
 
   async onDisconnect(reason:string): Promise<void> {
-    clearInterval(this.interval);
   }
 }
