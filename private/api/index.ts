@@ -21,10 +21,4 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-//Action Types
-export const SET_SCENE = 'SET_SCENE';
-
-//Action Dispatchers
-export const setScene = scene => {
-  return { action: SET_SCENE, scene };
-};
+export * from './scene';

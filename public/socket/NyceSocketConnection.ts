@@ -23,11 +23,13 @@
 
 import { SocketConnection } from '@yourwishes/app-socket/public';
 import { NyceApp } from './../app/NyceApp';
+import { NycePublicState } from './../states/';
+import { NycePublicActions } from './../actions/';
 
 export class NyceSocketConnection extends SocketConnection {
-  app:NyceApp;
+  app:NyceApp<NycePublicState,NycePublicActions>;
 
-  constructor(app:NyceApp, path?:string) {
+  constructor(app:NyceApp<NycePublicState,NycePublicActions>, path?:string) {
     super(path);
     this.app = app;
   }

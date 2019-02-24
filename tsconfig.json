@@ -11,7 +11,7 @@
   "include": [
     "./private/**/*.ts",
     "./common/*.ts",
-    "./public/index.tsx"
+    "./public/**/*.tsx"
   ],
   "exclude": [
     "node_modules",

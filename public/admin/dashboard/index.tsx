@@ -21,8 +21,31 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export const SET_STATE = 'SET_STATE';
+import * as React from 'react';
+import { AdminPage } from './../page/';
 
-export const setState = (state:object) => {
-  return { type: SET_STATE, state };
-};
+export class DashboardPage extends React.Component {
+  constructor(props:any) {
+    super(props);
+  }
+
+  onChange(e:React.ChangeEvent<HTMLSelectElement>) {
+    console.log(e.target.value);
+    console.log('On Change');
+  }
+
+  render() {
+    return (
+      <AdminPage>
+        Dashboard
+
+        <select onChange={e => this.onChange(e)}>
+          <option value="first-scene">First Scene</option>
+          <option value="second-scene">Second Scene</option>
+        </select>
+      </AdminPage>
+    );
+  }
+}
+
+export default DashboardPage;

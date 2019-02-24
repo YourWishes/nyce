@@ -26,12 +26,20 @@ import { SocketConnection } from '@yourwishes/app-socket';
 import { NyceApp } from './../app/';
 
 export class NyceConnection extends SocketConnection {
+  interval:NodeJS.Timeout;
+
+  getApp():NyceApp<any,any> {
+    return this.module.app as NyceApp<any,any>;
+  }
+
   sendState() {
     //Sends the entire state to the client
+    console.log('SEnding:');
+    console.log(JSON.stringify(this.getApp().store.store.getState()));
     this.send({
       path: '/state/receive',
       code: RESPONSE_OK,
-      data: (this.module.app as NyceApp).nyce.store.getState()
+      data: this.getApp().store.store.getState()
     });
   }
 
@@ -40,5 +48,7 @@ export class NyceConnection extends SocketConnection {
   }
 
   async onDisconnect(reason:string): Promise<void> {
+    console.log('Connection Disconnected!');
+    console.log(reason);
   }
 }

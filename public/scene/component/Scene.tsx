@@ -21,12 +21,28 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './SceneActions';
-export * from './StateActions';
+import './SceneStyles.scss';
+import * as React from 'react';
+import { Route } from '@yourwishes/app-simple-react/public';
+import { isValidSceneName, getScenePath } from './../utils';
 
-import { Actions as SceneActions } from './SceneActions';
-import { Actions as StateActions } from './StateActions';
 
-export type Actions = (
-  SceneActions|StateActions
-);
+export interface SceneProps {
+  name:string,
+  children?:React.ReactNode
+}
+
+export const SceneWrapper = (props:any) => {
+  return (
+    <div className="o-scene">{props.children}</div>
+  );
+};
+
+export const Scene = (props:SceneProps) => {
+  let { name } = props;
+  if(!isValidSceneName(name)) throw new Error("Invalid Scene Name, can only contain letters, spaces and numbers");
+
+  let path = getScenePath(name);
+
+  return <Route exact path={path} render={(routeProps:any) => <SceneWrapper {...routeProps} {...props} />} />;
+}

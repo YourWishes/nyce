@@ -21,12 +21,15 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './SceneActions';
-export * from './StateActions';
+import { SceneState } from './../states/';
 
-import { Actions as SceneActions } from './SceneActions';
-import { Actions as StateActions } from './StateActions';
+//Action Names
+export const SET_SCENE = 'SET_SCENE';
 
-export type Actions = (
-  SceneActions|StateActions
-);
+//Types
+export type SetScene = { type: typeof SET_SCENE, scene:SceneState };
+
+export type Actions = SetScene;
+
+//Action Methods
+export const setScene = (scene:SceneState):SetScene => ({ type: SET_SCENE, scene });

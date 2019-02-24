@@ -22,3 +22,9 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 export * from './../../common/actions/';
+
+import { Actions } from './../../common/';
+
+export type NycePublicActions = (
+  Actions
+);

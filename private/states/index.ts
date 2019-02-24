@@ -21,12 +21,9 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './SceneActions';
-export * from './StateActions';
+export * from './../../common/states';
+import { CommonState } from './../../common/';
 
-import { Actions as SceneActions } from './SceneActions';
-import { Actions as StateActions } from './StateActions';
-
-export type Actions = (
-  SceneActions|StateActions
+export type NyceServerState = (
+  CommonState
 );

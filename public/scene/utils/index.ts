@@ -21,12 +21,6 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './SceneActions';
-export * from './StateActions';
-
-import { Actions as SceneActions } from './SceneActions';
-import { Actions as StateActions } from './StateActions';
-
-export type Actions = (
-  SceneActions|StateActions
-);
+export const getSceneHandle = (sceneName:string) => sceneName.toLowerCase().replace(/\s/g,'-');
+export const isValidSceneName = (sceneName:string) => /^[A-z0-9\s]+$/gi.test(sceneName);
+export const getScenePath = (sceneName:string) => `/scenes/${getSceneHandle(sceneName)}`;

@@ -21,12 +21,20 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './SceneActions';
-export * from './StateActions';
 
-import { Actions as SceneActions } from './SceneActions';
-import { Actions as StateActions } from './StateActions';
+import { SocketRequest } from '@yourwishes/app-socket/public';
+import { NyceSocketHandler, NyceSocketConnection } from './../../socket';
+import { setScene } from './../../actions/';
+import { ThunkDispatch } from 'redux-thunk';
 
-export type Actions = (
-  SceneActions|StateActions
-);
+export class ReceiveSceneHandler extends NyceSocketHandler {
+  constructor(connection:NyceSocketConnection) {
+    super(connection, '/scene/set');
+  }
+
+  async onRequest(request:SocketRequest):Promise<void> {
+    (
+      this.connection.app.store.dispatch as ThunkDispatch<any, any, any>
+    )( setScene(request.data['scene']) );
+  }
+}

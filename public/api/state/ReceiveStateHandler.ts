@@ -24,6 +24,7 @@
 import { SocketRequest } from '@yourwishes/app-socket/public';
 import { NyceSocketHandler, NyceSocketConnection } from './../../socket';
 import { setState } from './../../actions/';
+import { ThunkDispatch } from 'redux-thunk';
 
 export class ReceiveStateHandler extends NyceSocketHandler {
   constructor(connection:NyceSocketConnection) {
@@ -31,6 +32,8 @@ export class ReceiveStateHandler extends NyceSocketHandler {
   }
 
   async onRequest(request:SocketRequest):Promise<void> {
-    this.connection.app.store.dispatch(setState(request.data));
+    (this.connection.app.store.dispatch as ThunkDispatch<any, any, any>)(
+      setState(request.data as any)
+    );
   }
 }

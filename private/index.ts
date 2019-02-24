@@ -22,9 +22,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 export * from './actions';
+export * from './api';
 export * from './app';
 export * from './compiler';
 export * from './connection';
-export * from './connection';
 export * from './module';
 export * from './reducers';
+export * from './states';

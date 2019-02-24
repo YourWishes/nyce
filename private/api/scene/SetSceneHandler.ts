@@ -21,12 +21,17 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './SceneActions';
-export * from './StateActions';
+import { NyceApp } from './../../app/';
+import { RESPONSE_BAD_REQUEST } from '@yourwishes/app-api';
+import { SocketModule, SocketAPIHandler, SocketAPIRequest, SocketAPIResponse } from '@yourwishes/app-socket';
 
-import { Actions as SceneActions } from './SceneActions';
-import { Actions as StateActions } from './StateActions';
+export class SetSceneHandler extends SocketAPIHandler {
+  constructor(socket:SocketModule) {
+    super(socket, '/scene');
+  }
 
-export type Actions = (
-  SceneActions|StateActions
-);
+  async onRequest(request:SocketAPIRequest):Promise<SocketAPIResponse> {
+    if(!request.hasString('scene', 32)) return { code: RESPONSE_BAD_REQUEST, data: 'Missing Scene Name', path: '/scene/error' };
+    (request.owner.app as NyceApp<any,any>).nyce.setScene(request.getString('scene', 32));
+  }
+}

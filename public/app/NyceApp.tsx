@@ -24,40 +24,66 @@
 import './../styles/NyceStyles.scss';
 
 import * as React from 'react';
-import { App, Router, AppReducer } from '@yourwishes/app-simple-react/public';
+import { Reducer } from 'redux';
+import { App, Router, Route } from '@yourwishes/app-simple-react/public';
+import { StoreListener } from '@yourwishes/app-store';
 
-import { SceneProps } from './../scene/Scene';
+import { LoadingPage } from './../admin/loading';
 import { NyceSocketConnection } from './../socket/NyceSocketConnection';
-import { ReceiveStateHandler } from './../api/state/ReceiveStateHandler';
+import { NycePublicState } from './../states/';
+import { NycePublicActions } from './../actions/';
+import { ReceiveSceneHandler, ReceiveStateHandler } from './../api/';
+import { reducer as nyceReducer } from './../reducers/';
+import { getScenePath } from './../scene';
 
-export abstract class NyceApp extends App {
+export abstract class
+  NyceApp<S extends NycePublicState, A extends NycePublicActions>
+  extends
+  App<S, A> implements StoreListener<S>
+{
   socket:NyceSocketConnection;
 
-  constructor(reducer:AppReducer={}) {
-    //Setup Nyce Reducers
-    reducer = {
-      //...nyce,
-      ...reducer
-    };
-    super('nyce', reducer);//For 'nyce', refer to NyceCompiler.ts in private/compiler..
+  constructor() {
+    super('nyce');//For 'nyce', refer to NyceCompiler.ts in private/compiler..
+
+    //Setup state listeners
+    this.store.addStateChangeListener('scene', this);
 
     //Setup Socket Connection
     this.socket = new NyceSocketConnection(this);
 
     //Setup Default Handlers
-    this.socket.handlers.push(new ReceiveStateHandler(this.socket));
+    [
+      ReceiveSceneHandler,
+      ReceiveStateHandler
+    ].forEach(e => {
+      let i = new e(this.socket);
+      this.socket.handlers.push(i);
+    });
   }
 
   getComponent() {
     let scenes = this.getScenes();
 
     return (
-      <Router>
+      <Router history={this.history}>
+
+        {/* Admin Panel Scenes */}
+        <Route exact path="/admin" load={() => import('./../admin/dashboard/index')} loadingComponent={LoadingPage} />
+
         {/* Graphics Scenes */}
         { scenes }
       </Router>
     );
   }
 
-  abstract getScenes():React.ReactElement<SceneProps>[];
+  abstract getScenes():JSX.Element;
+  getReducer():Reducer<S,A> { return nyceReducer as Reducer<S,A>; }
+
+  onStateChange(newState:S, oldState:S, key:string) {
+    //Update scene if the request calls for it.
+    if(key == 'scene') {
+      this.history.push(getScenePath(newState.scene));
+    }
+  }
 }

@@ -21,4 +21,13 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './../../common/reducers/';
+import { Reducer } from 'redux';
+import { reduceReducers } from '@yourwishes/app-store';
+import { reducer as commonReducer } from './../../common/';
+
+import { NycePublicState } from './../states/';
+import { NycePublicActions } from './../actions/';
+
+export const reducer:Reducer<NycePublicState, NycePublicActions> = reduceReducers<NycePublicState, NycePublicActions>(
+  commonReducer
+);

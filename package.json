@@ -14,8 +14,17 @@
     "url": "git+https://github.com/YourWishes/nyce.git"
   },
   "keywords": [
-    "Shopify",
-    "example",
+    "Stream",
+    "Graphics",
+    "OBS",
+    "Open",
+    "Broadcaster",
+    "Broadcast",
+    "overlay",
+    "twitch",
+    "gaming",
+    "video",
+    "games",
     "app",
     "Dominic",
     "Masters"
@@ -27,18 +36,25 @@
   },
   "dependencies": {
     "@yourwishes/app-base": "^1.2.0",
-    "@yourwishes/app-simple-react": "^0.5.0",
-    "@yourwishes/app-socket": "^1.0.5",
+    "@yourwishes/app-simple-react": "^0.8.0",
+    "@yourwishes/app-socket": "^1.0.6",
+    "@yourwishes/app-store": "^0.2.1",
+    "@yourwishes/app-store-module": "^0.1.0",
     "react": "^16.7.0",
-    "react-loadable": "^5.5.0"
+    "react-loadable": "^5.5.0",
+    "redux-promise-middleware": "^6.0.0",
+    "redux-promise-middleware-actions": "^2.1.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.6",
     "@types/node": "^10.12.18",
     "@types/react": "^16.7.20",
     "@types/react-router-dom": "^4.3.1",
     "@types/redux-logger": "^3.0.6",
     "@types/socket.io-client": "^1.4.32",
+    "jest": "^24.1.0",
     "redux-logger": "^3.0.6",
+    "ts-jest": "^24.0.0",
     "typescript": "^3.2.4",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"

@@ -21,15 +21,23 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { Reducer } from 'redux';
 import { Socket } from 'socket.io';
 import { App } from '@yourwishes/app-base';
 import { IReactApp, ReactModule } from '@yourwishes/app-react';
-import { ISocketApp, SocketModule, SocketConnection } from '@yourwishes/app-socket';
+import { ISocketApp, SocketModule } from '@yourwishes/app-socket';
+import { IStoreApp, StoreModule } from '@yourwishes/app-store-module';
+
 import { NyceConnection } from './../connection/';
 import { NyceModule } from './../module/';
+import { NyceServerActions } from './../actions/';
+import { NyceServerState } from './../states/';
 
-
-export class NyceApp extends App implements IReactApp, ISocketApp {
+export abstract class NyceApp<S extends NyceServerState, A extends NyceServerActions>
+  extends App
+  implements IReactApp, ISocketApp, IStoreApp<S,A>
+{
+  store:StoreModule<S,A>;
   socket:SocketModule;
   server:ReactModule;
   nyce:NyceModule;
@@ -43,13 +51,16 @@ export class NyceApp extends App implements IReactApp, ISocketApp {
     this.socket = new SocketModule(this);
     this.addModule(this.socket);
 
+    this.store = new StoreModule(this);
+    this.addModule(this.store);
+
     this.nyce = new NyceModule(this);
     this.addModule(this.nyce);
   }
 
-  async acceptSocket(module:SocketModule, socket:Socket):Promise<SocketConnection> {
+  async acceptSocket(module:SocketModule, socket:Socket):Promise<NyceConnection> {
     return new NyceConnection(module, socket);
   }
 
-  getReducers():object { return {} }
+  abstract getReducer():Reducer<S,A>;
 }

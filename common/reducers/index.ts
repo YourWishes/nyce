@@ -21,4 +21,24 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export const NOTHING = 'nothing here but I want to keep my exports.';
+
+import { reduceReducers } from '@yourwishes/app-store';
+import { combineReducers } from 'redux';
+import { Actions } from './../actions/';
+import { CommonState } from './../states';
+
+//Exports
+export * from './scene/SceneReducer';
+export * from './state/StateReducer';
+
+//Import various reducers
+import { sceneReducer } from './scene/SceneReducer';
+import { stateReducer } from './state/StateReducer';
+
+//Create the common reducer
+export const reducer = reduceReducers<CommonState, Actions>(
+  stateReducer,
+  combineReducers<CommonState,Actions>({
+    scene: sceneReducer
+  })
+);

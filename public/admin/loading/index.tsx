@@ -21,12 +21,16 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './SceneActions';
-export * from './StateActions';
+import * as React from 'react';
+import { Loader } from './../../objects/load/';
+import './LoadingPage.scss';
 
-import { Actions as SceneActions } from './SceneActions';
-import { Actions as StateActions } from './StateActions';
+export const LoadingPage = () => {
+  return (
+    <div className="c-loading-page">
+      <Loader  />
+    </div>
+  );
+};
 
-export type Actions = (
-  SceneActions|StateActions
-);
+export default LoadingPage;

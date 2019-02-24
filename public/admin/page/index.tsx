@@ -21,31 +21,16 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './SceneStyles';
 import * as React from 'react';
-import { Route } from '@yourwishes/app-simple-react/public';
 
-
-export interface SceneProps {
-  name:string,
+export interface AdminPageProps {
   children?:React.ReactNode
 }
 
-export const getSceneHandle = (sceneName:string) => sceneName.toLowerCase().replace(/\s/g,'-');
-export const isValidSceneName = (sceneName:string) => /^[A-z0-9\s]+$/gi.test(sceneName);
-
-export const SceneWrapper = (props:any) => {
+export const AdminPage = (props:AdminPageProps) => {
   return (
-    <div className="o-scene">{props.children}</div>
+    <div>
+      { props.children }
+    </div>
   );
 };
-
-export const Scene = (props:SceneProps) => {
-  let { name } = props;
-  if(!isValidSceneName(name)) throw new Error("Invalid Scene Name, can only contain letters, spaces and numbers");
-
-  let handle = getSceneHandle(name);
-  let path = `/scenes/${handle}`;
-
-  return <Route exact path={path} render={(routeProps:any) => <SceneWrapper {...routeProps} {...props} />} />;
-}

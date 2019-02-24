@@ -21,24 +21,40 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { NyceApp } from './../app/NyceApp';
 import { Module } from '@yourwishes/app-base';
-import { createStore, Store, combineReducers } from 'redux';
+import { RESPONSE_OK } from '@yourwishes/app-api';
+import { NyceApp } from './../app/NyceApp';
+import { NyceServerActions} from './../actions/';
+import { NyceServerState } from './../states/';
+import { reducer as nyceReducer } from './../reducers/';
+
+import { SetSceneHandler } from './../api/';
+
+import * as Actions from './../actions/';
 
 export class NyceModule extends Module {
-  store:Store;
-  app:NyceApp;
+  app:NyceApp<NyceServerState,NyceServerActions>;
 
-  constructor(app:NyceApp) {
+  constructor(app:NyceApp<any,any>) {
     super(app);
+
     if(!app.server) throw new Error("Ensure Server has been setup before initializing Nyce");
     if(!app.socket) throw new Error("Ensure Socket Server has been setup before initializing Nyce");
+    if(!app.store) throw new Error("Ensure Store module has been setup before initializing Nyce");
+    this.app = app;
 
-    //Create Nyce Redux
-    this.store = createStore(combineReducers({
-      ...(app.getReducers() || {})
-    }));
+    //Setup the Nyce Reducer
+    app.store.addReducer(nyceReducer);
 
+    //Add our API Routes
+    [
+      SetSceneHandler
+    ].forEach(e => app.socket.addHandler(new e(app.socket)));
+  }
+
+  setScene(scene:string) {
+    this.app.store.store.dispatch(Actions.setScene(scene));
+    this.app.socket.sockets.forEach(e => e.send({ code: RESPONSE_OK, data: { scene }, path: '/scene/set' }));
   }
 
   async init():Promise<void> {

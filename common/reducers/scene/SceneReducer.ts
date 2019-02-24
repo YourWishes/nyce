@@ -21,12 +21,14 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-export * from './SceneActions';
-export * from './StateActions';
+import { SET_SCENE, Actions as SceneActions } from './../../actions/SceneActions';
+import { SceneState, InitialSceneState } from './../../states/SceneState';
 
-import { Actions as SceneActions } from './SceneActions';
-import { Actions as StateActions } from './StateActions';
-
-export type Actions = (
-  SceneActions|StateActions
-);
+export const sceneReducer = (state:SceneState=InitialSceneState, action:SceneActions) => {
+  switch(action.type) {
+    case SET_SCENE:
+      return action.scene;
+    default:
+      return state;
+  }
+};

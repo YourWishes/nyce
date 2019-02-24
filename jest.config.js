@@ -1,5 +1,6 @@
 module.exports = {
   "roots": [
+    "<rootDir>/common",
     "<rootDir>/private",
     "<rootDir>/public"
   ],
