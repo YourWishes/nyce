@@ -34,8 +34,6 @@ export class NyceConnection extends SocketConnection {
 
   sendState() {
     //Sends the entire state to the client
-    console.log('SEnding:');
-    console.log(JSON.stringify(this.getApp().store.store.getState()));
     this.send({
       path: '/state/receive',
       code: RESPONSE_OK,
