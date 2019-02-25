@@ -1,6 +1,6 @@
 {
   "name": "@yourwishes/nyce",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/private/index.js",
   "scripts": {
@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@yourwishes/app-base": "^1.2.0",
-    "@yourwishes/app-simple-react": "^0.8.1",
+    "@yourwishes/app-simple-react": "^0.8.3",
     "@yourwishes/app-socket": "^1.0.6",
     "@yourwishes/app-store": "^0.2.1",
     "@yourwishes/app-store-module": "^0.1.0",
