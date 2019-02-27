@@ -29,6 +29,7 @@ import { ISocketApp, SocketModule } from '@yourwishes/app-socket';
 import { IStoreApp, StoreModule } from '@yourwishes/app-store-module';
 
 import { NyceConnection } from './../connection/';
+import { NyceCompiler } from './../compiler';
 import { NyceModule } from './../module/';
 import { NyceServerActions } from './../actions/';
 import { NyceServerState } from './../states/';
@@ -63,4 +64,6 @@ export abstract class NyceApp<S extends NyceServerState, A extends NyceServerAct
   }
 
   abstract getReducer():Reducer<S,A>;
+
+  getCompiler() { return new NyceCompiler(); }
 }
