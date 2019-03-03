@@ -26,9 +26,10 @@ import { SocketRequest } from '@yourwishes/app-socket/public';
 import { NyceSocketHandler, NyceSocketConnection } from './../../socket';
 import { setScene } from './../../actions/';
 import { ThunkDispatch } from 'redux-thunk';
+import { Action } from 'redux';
 
-export class ReceiveSceneHandler extends NyceSocketHandler {
-  constructor(connection:NyceSocketConnection) {
+export class ReceiveSceneHandler<S,A extends Action> extends NyceSocketHandler<S,A> {
+  constructor(connection:NyceSocketConnection<S,A>) {
     super(connection, '/scene/set');
   }
 

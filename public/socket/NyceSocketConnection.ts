@@ -21,15 +21,16 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { Action } from 'redux';
 import { SocketConnection } from '@yourwishes/app-socket/public';
 import { NyceApp } from './../app/NyceApp';
 import { NycePublicState } from './../states/';
 import { NycePublicActions } from './../actions/';
 
-export class NyceSocketConnection extends SocketConnection {
-  app:NyceApp<NycePublicState,NycePublicActions>;
+export class NyceSocketConnection<S,A extends Action> extends SocketConnection {
+  app:NyceApp<S,A>;
 
-  constructor(app:NyceApp<NycePublicState,NycePublicActions>, path?:string) {
+  constructor(app:NyceApp<S,A>, path?:string) {
     super(path);
     this.app = app;
   }

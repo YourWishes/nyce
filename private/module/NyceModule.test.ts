@@ -1,7 +1,7 @@
 import { NyceApp, NyceModule, reducer as nyceReducer } from './../';
 
 class DummyApp extends NyceApp<any, any> {
-  getReducer() { return null; }
+  getNyceReducer() { return null; }
 }
 
 const dummyApp = new DummyApp();
@@ -28,11 +28,5 @@ describe('NyceModule', () => {
     let app = new DummyApp();
     delete app.store;
     expect(() => new NyceModule(app)).toThrow();
-  });
-
-  it('should setup the nyce reducer', () => {
-    let app = new DummyApp();
-    expect(() => new NyceModule(app)).not.toThrow();
-    expect(app.store.reducers).toContain(nyceReducer);
   });
 });

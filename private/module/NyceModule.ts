@@ -21,30 +21,24 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { Action } from 'redux';
 import { Module } from '@yourwishes/app-base';
 import { RESPONSE_OK } from '@yourwishes/app-api';
 import { NyceApp } from './../app/NyceApp';
-import { NyceServerActions} from './../actions/';
-import { NyceServerState } from './../states/';
-import { reducer as nyceReducer } from './../reducers/';
 
 import { SetSceneHandler } from './../api/';
-
 import * as Actions from './../actions/';
 
-export class NyceModule extends Module {
-  app:NyceApp<NyceServerState,NyceServerActions>;
+export class NyceModule<S, A extends Action> extends Module {
+  app:NyceApp<S,A>;
 
-  constructor(app:NyceApp<any,any>) {
+  constructor(app:NyceApp<S,A>) {
     super(app);
 
     if(!app.server) throw new Error("Ensure Server has been setup before initializing Nyce");
     if(!app.socket) throw new Error("Ensure Socket Server has been setup before initializing Nyce");
     if(!app.store) throw new Error("Ensure Store module has been setup before initializing Nyce");
     this.app = app;
-
-    //Setup the Nyce Reducer
-    app.store.addReducer(nyceReducer);
 
     //Add our API Routes
     [

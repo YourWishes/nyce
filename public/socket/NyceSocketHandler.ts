@@ -23,11 +23,12 @@
 
 import { SocketHandler } from '@yourwishes/app-socket/public';
 import { NyceSocketConnection } from './NyceSocketConnection';
+import { Action } from 'redux';
 
-export abstract class NyceSocketHandler extends SocketHandler {
-  connection:NyceSocketConnection;
+export abstract class NyceSocketHandler<S, A extends Action> extends SocketHandler {
+  connection:NyceSocketConnection<S,A>;
 
-  constructor(connection:NyceSocketConnection, path:string|string[]) {
+  constructor(connection:NyceSocketConnection<S,A>, path:string|string[]) {
     super(connection, path);
     this.connection = connection;
   }

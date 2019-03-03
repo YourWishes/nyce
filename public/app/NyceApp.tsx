@@ -24,9 +24,9 @@
 import './../styles/NyceStyles.scss';
 
 import * as React from 'react';
-import { Reducer } from 'redux';
+import { Reducer, Action } from 'redux';
 import { App, Router, Route } from '@yourwishes/app-simple-react/public';
-import { StoreListener } from '@yourwishes/app-store';
+import { StoreListener, reduceReducers } from '@yourwishes/app-store';
 
 import { LoadingPage } from './../admin/loading';
 import { NyceSocketConnection } from './../socket/NyceSocketConnection';
@@ -36,12 +36,11 @@ import { ReceiveSceneHandler, ReceiveStateHandler } from './../api/';
 import { reducer as nyceReducer } from './../reducers/';
 import { getScenePath } from './../scene';
 
-export abstract class
-  NyceApp<S extends NycePublicState, A extends NycePublicActions>
-  extends
-  App<S, A> implements StoreListener<S>
+export abstract class NyceApp<S, A extends Action> extends
+  App<S & NycePublicState, A | NycePublicActions> implements
+  StoreListener<S & NycePublicState>
 {
-  socket:NyceSocketConnection;
+  socket:NyceSocketConnection<S,A>;
 
   constructor() {
     super('nyce');//For 'nyce', refer to NyceCompiler.ts in private/compiler..
@@ -50,7 +49,7 @@ export abstract class
     this.store.addStateChangeListener('scene', this);
 
     //Setup Socket Connection
-    this.socket = new NyceSocketConnection(this);
+    this.socket = new NyceSocketConnection<S,A>(this);
 
     //Setup Default Handlers
     [
@@ -78,9 +77,14 @@ export abstract class
   }
 
   abstract getScenes():JSX.Element;
-  getReducer():Reducer<S,A> { return nyceReducer as Reducer<S,A>; }
+  abstract getNyceReducer():Reducer<S,A>;
+  getReducer():Reducer<S & NycePublicState, A | NycePublicActions> {
+    return reduceReducers<S&NycePublicState, A|NycePublicActions>(
+      nyceReducer as any, this.getNyceReducer() as any
+    );
+  }
 
-  onStateChange(newState:S, oldState:S, key:string) {
+  onStateChange(newState:S&NycePublicState, oldState:S|NycePublicActions, key:string) {
     //Update scene if the request calls for it.
     if(key == 'scene') {
       this.history.push(getScenePath(newState.scene));

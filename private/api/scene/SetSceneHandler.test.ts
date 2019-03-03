@@ -1,10 +1,11 @@
+import { Reducer } from 'redux';
 import { SetSceneHandler } from './';
 import { NyceApp, NyceServerActions, NyceServerState } from './../../';
 import { RESPONSE_BAD_REQUEST, RESPONSE_OK } from '@yourwishes/app-api';
 import { SocketAPIRequest } from '@yourwishes/app-socket';
 
-class DummyApp extends NyceApp<NyceServerState, NyceServerActions> {
-  getReducer() {return null;}
+class DummyApp extends NyceApp<any,any> {
+  getNyceReducer():Reducer<any, any> {return null;}
 }
 const dummyApp = new DummyApp();
 

@@ -21,13 +21,14 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { Action } from 'redux';
 import { SocketRequest } from '@yourwishes/app-socket/public';
 import { NyceSocketHandler, NyceSocketConnection } from './../../socket';
 import { setState } from './../../actions/';
 import { ThunkDispatch } from 'redux-thunk';
 
-export class ReceiveStateHandler extends NyceSocketHandler {
-  constructor(connection:NyceSocketConnection) {
+export class ReceiveStateHandler<S,A extends Action> extends NyceSocketHandler<S,A> {
+  constructor(connection:NyceSocketConnection<S,A>) {
     super(connection, '/state/receive');
   }
 

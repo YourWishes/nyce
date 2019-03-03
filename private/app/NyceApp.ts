@@ -21,27 +21,29 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { Reducer } from 'redux';
+import { Reducer, Action } from 'redux';
 import { Socket } from 'socket.io';
+
 import { App } from '@yourwishes/app-base';
 import { IReactApp, ReactModule } from '@yourwishes/app-react';
 import { ISocketApp, SocketModule } from '@yourwishes/app-socket';
 import { IStoreApp, StoreModule } from '@yourwishes/app-store-module';
+import { reduceReducers } from '@yourwishes/app-store';
 
 import { NyceConnection } from './../connection/';
 import { NyceCompiler } from './../compiler';
 import { NyceModule } from './../module/';
 import { NyceServerActions } from './../actions/';
 import { NyceServerState } from './../states/';
+import { reducer as nyceReducer } from './../reducers/';
 
-export abstract class NyceApp<S extends NyceServerState, A extends NyceServerActions>
-  extends App
-  implements IReactApp, ISocketApp, IStoreApp<S,A>
+export abstract class NyceApp<S, A extends Action> extends App implements
+  IReactApp, ISocketApp, IStoreApp<S & NyceServerState,A | NyceServerActions>
 {
-  store:StoreModule<S,A>;
+  store:StoreModule<S & NyceServerState,A | NyceServerActions>;
   socket:SocketModule;
   server:ReactModule;
-  nyce:NyceModule;
+  nyce:NyceModule<S,A>;
 
   constructor() {
     super();
@@ -55,7 +57,7 @@ export abstract class NyceApp<S extends NyceServerState, A extends NyceServerAct
     this.store = new StoreModule(this);
     this.addModule(this.store);
 
-    this.nyce = new NyceModule(this);
+    this.nyce = new NyceModule<S,A>(this);
     this.addModule(this.nyce);
   }
 
@@ -63,7 +65,11 @@ export abstract class NyceApp<S extends NyceServerState, A extends NyceServerAct
     return new NyceConnection(module, socket);
   }
 
-  abstract getReducer():Reducer<S,A>;
-
+  abstract getNyceReducer():Reducer<S,A>
   getCompiler() { return new NyceCompiler(); }
+  getReducer():Reducer<S&NyceServerState, A|NyceServerActions> {
+    return reduceReducers<S&NyceServerState, A|NyceServerActions>(
+      nyceReducer as any, this.getNyceReducer() as any
+    );
+  }
 }
