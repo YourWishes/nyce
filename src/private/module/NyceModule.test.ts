@@ -30,3 +30,9 @@ describe('NyceModule', () => {
     expect(() => new NyceModule(app)).toThrow();
   });
 });
+
+describe('loadPackage', () => {
+  it('should load the package data', () => {
+    expect(new NyceModule(new DummyApp()).package).toHaveProperty('name', '@yourwishes/nyce');
+  });
+});

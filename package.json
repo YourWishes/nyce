@@ -35,11 +35,11 @@
     "url": "https://github.com/YourWishes/nyce/issues"
   },
   "dependencies": {
-    "@yourwishes/app-base": "^1.3.0",
-    "@yourwishes/app-simple-react": "^1.0.0",
-    "@yourwishes/app-socket": "^1.0.6",
-    "@yourwishes/app-store": "^0.2.1",
-    "@yourwishes/app-store-module": "^0.1.0",
+    "@yourwishes/app-base": "^2.0.0",
+    "@yourwishes/app-simple-react": "^2.0.1",
+    "@yourwishes/app-socket": "^2.0.2",
+    "@yourwishes/app-store": "^1.0.0",
+    "@yourwishes/app-store-module": "^1.0.0",
     "react": "^16.7.0",
     "react-loadable": "^5.5.0",
     "redux-promise-middleware": "^6.0.0",

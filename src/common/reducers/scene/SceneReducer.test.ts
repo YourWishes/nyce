@@ -1,5 +1,6 @@
 import { sceneReducer } from './SceneReducer';
 import { setScene } from './../../actions';
+import { InitialSceneState } from './../../states/';
 
 describe('sceneReducer', () => {
   it('should return an initial state', () => {
@@ -11,6 +12,7 @@ describe('sceneReducer', () => {
 
     expect(value).toBeDefined();
     expect(value).not.toBeNull();
+    expect(value).toStrictEqual(InitialSceneState);
   });
 
   it('should set the scene', () => {

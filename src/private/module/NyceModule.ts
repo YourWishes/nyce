@@ -51,7 +51,13 @@ export class NyceModule<S, A extends Action> extends Module {
     this.app.socket.sockets.forEach(e => e.send({ code: RESPONSE_OK, data: { scene }, path: '/scene/set' }));
   }
 
+  loadPackage() { return require ('./../../../package.json'); }
+
   async init():Promise<void> {
+
+  }
+
+  async destroy():Promise<void> {
 
   }
 }

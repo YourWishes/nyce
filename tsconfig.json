@@ -9,9 +9,9 @@
     "jsx": "React"
   },
   "include": [
-    "./private/**/*.ts",
-    "./common/*.ts",
-    "./public/**/*.tsx"
+    "./src/private/**/*.ts",
+    "./src/common/*.ts",
+    "./src/public/**/*.tsx"
   ],
   "exclude": [
     "node_modules",

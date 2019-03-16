@@ -25,7 +25,9 @@ import { Reducer, Action } from 'redux';
 import { Socket } from 'socket.io';
 
 import { App } from '@yourwishes/app-base';
+import { ServerModule } from '@yourwishes/app-server';
 import { IReactApp, ReactModule } from '@yourwishes/app-react';
+import { ISimpleReactApp, SimpleReactModule } from '@yourwishes/app-simple-react';
 import { ISocketApp, SocketModule } from '@yourwishes/app-socket';
 import { IStoreApp, StoreModule } from '@yourwishes/app-store-module';
 import { reduceReducers } from '@yourwishes/app-store';
@@ -38,27 +40,27 @@ import { NyceServerState } from './../states/';
 import { reducer as nyceReducer } from './../reducers/';
 
 export abstract class NyceApp<S, A extends Action> extends App implements
-  IReactApp, ISocketApp, IStoreApp<S & NyceServerState,A | NyceServerActions>
+  ISimpleReactApp, ISocketApp, IStoreApp<S & NyceServerState,A | NyceServerActions>
 {
+  react:ReactModule;
+  server:ServerModule;
+  simpleReact:SimpleReactModule;
+
   store:StoreModule<S & NyceServerState,A | NyceServerActions>;
   socket:SocketModule;
-  server:ReactModule;
   nyce:NyceModule<S,A>;
 
   constructor() {
     super();
 
-    this.server = new ReactModule(this);
-    this.addModule(this.server);
+    // Server and React
+    this.server = new ServerModule(this);
+    this.react = new ReactModule(this);
+    this.simpleReact = new SimpleReactModule(this);
 
     this.socket = new SocketModule(this);
-    this.addModule(this.socket);
-
     this.store = new StoreModule(this);
-    this.addModule(this.store);
-
     this.nyce = new NyceModule<S,A>(this);
-    this.addModule(this.nyce);
   }
 
   async acceptSocket(module:SocketModule, socket:Socket):Promise<NyceConnection> {

@@ -1,8 +1,8 @@
 module.exports = {
   "roots": [
-    "<rootDir>/common",
-    "<rootDir>/private",
-    "<rootDir>/public"
+    "<rootDir>/src/common",
+    "<rootDir>/src/private",
+    "<rootDir>/src/public"
   ],
   "transform": {
     "^.+\\.tsx?$": "ts-jest"
