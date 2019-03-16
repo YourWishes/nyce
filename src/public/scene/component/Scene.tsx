@@ -23,7 +23,7 @@
 
 import './SceneStyles.scss';
 import * as React from 'react';
-import { Route } from '@yourwishes/app-simple-react/public';
+import { Route } from '@yourwishes/app-simple-react/dist/public';
 import { isValidSceneName, getScenePath } from './../utils';
 
 

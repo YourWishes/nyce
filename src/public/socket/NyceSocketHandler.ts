@@ -21,7 +21,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { SocketHandler } from '@yourwishes/app-socket/public';
+import { SocketHandler } from '@yourwishes/app-socket/dist/public';
 import { NyceSocketConnection } from './NyceSocketConnection';
 import { Action } from 'redux';
 

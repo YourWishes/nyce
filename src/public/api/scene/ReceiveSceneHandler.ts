@@ -22,7 +22,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-import { SocketRequest } from '@yourwishes/app-socket/public';
+import { SocketRequest } from '@yourwishes/app-socket/dist/public';
 import { NyceSocketHandler, NyceSocketConnection } from './../../socket';
 import { setScene } from './../../actions/';
 import { ThunkDispatch } from 'redux-thunk';

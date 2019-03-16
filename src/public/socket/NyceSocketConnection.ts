@@ -22,7 +22,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import { Action } from 'redux';
-import { SocketConnection } from '@yourwishes/app-socket/public';
+import { SocketConnection } from '@yourwishes/app-socket/dist/public';
 import { NyceApp } from './../app/NyceApp';
 import { NycePublicState } from './../states/';
 import { NycePublicActions } from './../actions/';

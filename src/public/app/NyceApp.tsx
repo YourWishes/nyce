@@ -25,7 +25,7 @@ import './../styles/NyceStyles.scss';
 
 import * as React from 'react';
 import { Reducer, Action } from 'redux';
-import { App, Router, Route } from '@yourwishes/app-simple-react/public';
+import { App, Router, Route } from '@yourwishes/app-simple-react/dist/public';
 import { StoreListener, reduceReducers } from '@yourwishes/app-store';
 
 import { LoadingPage } from './../admin/loading';
